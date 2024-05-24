@@ -17,24 +17,30 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
    cd EfoodApp
    ```
 
-2. **Configure the Database**
+2. **Navigate to the Project Directory**
+
+   ```bash
+   cd EfoodApp
+   ```
+
+3. **Configure the Database**
 
    - Ensure you have SQL Server installed and running.
    - Update the connection string in `appsettings.json` with your SQL Server configuration.
 
-3. **Run Migrations**
+4. **Run Migrations**
 
    ```bash
    dotnet ef database update
    ```
 
-4. **Run the Application**
+5. **Run the Application**
 
    ```bash
    dotnet run
    ```
 
-5. **Access the Application**
+6. **Access the Application**
 
    - Open your web browser and go to `http://localhost:5078/`.
 
@@ -59,4 +65,15 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 - Main view of the application with featured products.
 
 ![Main View](path/to/your/image.png)
+
+
+
+
+
+
+
+
+
+
+
 
