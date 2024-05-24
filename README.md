@@ -63,7 +63,7 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 
 - Main view of the application with featured products.
 
-![Main View](Images/EfoodAppImg1.png)
+![Main View](Images/EfoodAppImg1.PNG)
 
 
 
