@@ -1,62 +1,62 @@
-# Dagster & Meltano
-This project uses Dagster to automate the execution of a Meltano pipeline consisting of CSV extractors and loaders. The main goal is to streamline the scheduling and execution of this workflow efficiently.
+# eFood Commerce
+
+This project is an e-commerce platform developed in ASP.NET Core and C#. The goal of this project is to provide an online food shopping solution with a smooth user experience and comprehensive functionalities.
 
 ## Requirements
 
-- Python 3.x installed on your system.
-- Meltano installed in your system.
-- Dagster 1.5.6
+- .NET 5.0 SDK or higher.
+- SQL Server.
+- Visual Studio 2019 or higher (optional for development).
 
-## Getting started
+## Getting Started
 
-1. Create the .env based on .env.example and add your meltano project path
+1. **Clone the Repository**
 
-2. Go to meltano
+   ```bash
+   git clone https://github.com/yourusername/efood-commerce.git
+   cd efood-commerce
+   ```
 
-```bash
-cd dagster_project
-```
+2. **Configure the Database**
 
-3. Change file_de.json and add the path where `input/CSV-Template1.csv` is located
+   - Ensure you have SQL Server installed and running.
+   - Update the connection string in `appsettings.json` with your SQL Server configuration.
 
-"path": "CSV_FILE_PATH",
+3. **Run Migrations**
 
-4. Go to dagster_project
+   ```bash
+   dotnet ef database update
+   ```
 
-```bash
-cd dagster_project
-```
+4. **Run the Application**
 
-5. Install the dependencies
+   ```bash
+   dotnet run
+   ```
 
-```bash
-pip install -e ".[dev]"
-```
+5. **Access the Application**
 
-6. Start Dagster
+   - Open your web browser and go to `https://localhost:5001`.
 
-```bash
-dagster dev
-```
+## Features
+
+- **Authentication and Authorization**: User registration, login, and profile management.
+- **Product Management**: Create, edit, delete, and list products.
+- **Shopping Cart**: Add products to the cart and manage orders.
+- **Product Search**: Search for products by name, category, and price.
+- **Order History**: View order history and current order status.
+
+## Technologies Used
+
+- **Backend**: ASP.NET Core 5.0, C#
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Database**: SQL Server
+- **Authentication**: ASP.NET Identity
+- **Hosting**: Microsoft Azure
 
 ## Results
 
-- This is the dashboard with the meltano job
+- Main view of the application with featured products.
 
-![Screenshot (160)](https://github.com/Bryancampos20/Dagster-Meltano/blob/main/results/1.png)
+![Main View](path/to/your/image.png)
 
-- The only way to execute the job is by clicking it
-
-![Screenshot (160)](https://github.com/Bryancampos20/Dagster-Meltano/blob/main/results/2.png)
-
-- When we click on "Launch Run" we can execute the job
-
-![Screenshot (160)](https://github.com/Bryancampos20/Dagster-Meltano/blob/main/results/3.png)
-
-- This is the result
-
-![Screenshot (160)](https://github.com/Bryancampos20/Dagster-Meltano/blob/main/results/4.png)
-
-This is a basic example of how we can run a Meltano command in Dagster.
-
-Happy coding! 🚀
