@@ -1,4 +1,3 @@
-```markdown
 # eFood Commerce
 
 This project is an e-commerce platform developed in ASP.NET Core and C#. The goal of this project is to provide an online food shopping solution with a smooth user experience and comprehensive functionalities.
