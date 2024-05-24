@@ -58,7 +58,6 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Database**: SQL Server
 - **Authentication**: ASP.NET Identity
-- **Hosting**: Microsoft Azure
 
 ## Results
 
