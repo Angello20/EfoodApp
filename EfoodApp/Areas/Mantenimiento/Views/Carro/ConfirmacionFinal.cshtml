@@ -1,0 +1,47 @@
+﻿@model EfoodApp.Modelos.ViewModels.ConfirmacionFinalVM
+
+<div class="container">
+    <h2>Confirmación del Pedido</h2>
+    <div>
+        <h3>@Model.Pedido.UsuarioAplicacion?.Nombres @Model.Pedido.UsuarioAplicacion?.Apellidos</h3>
+        <p>Dirección: @Model.Pedido.UsuarioAplicacion?.Direccion</p>
+        <p>Teléfono: @Model.Pedido.UsuarioAplicacion?.PhoneNumber</p>
+    </div>
+    <div>
+        <h4>Forma de Pago</h4>
+        <p>Medio: @Model.TipoDePago</p>
+        @if (Model.TipoDePago == "Efectivo")
+        {
+            <p>Tipo: No aplica</p>
+            <p>Número: No aplica</p>
+        }
+        else if (Model.TipoDePago == "TarjetaCreditoDebito")
+        {
+            <p>Tipo: Tarjeta</p>
+            <p>Número: **** **** **** @Model.UltimosCuatroDigitosTarjeta</p>
+        }
+        else if (Model.TipoDePago == "ChequeElectronico")
+        {
+            <p>Tipo: Cheque Electrónico</p>
+            
+        }
+        else
+        {
+            <p>Tipo: No aplica</p>
+            <p>Número: No aplica</p>
+        }
+    </div>
+    <div>
+        <h4>Total: @Model.Pedido.TotalOrden</h4>
+    </div>
+    <form asp-action="GuardarPedido" method="post">
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Guardar Pedido</button>
+        </div>
+    </form>
+    
+    <div class="text-center mt-4">
+        
+        <a class="btn btn-danger" href="@Url.Action("Index", "Home", new { area = "Mantenimiento" })" role="button">Cancelar Pedido</a>
+    </div>
+</div>

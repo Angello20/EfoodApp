@@ -1,0 +1,42 @@
+﻿@model EfoodApp.Modelos.ViewModels.CarroCompraVM
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            Selecciona tu método de pago
+        </div>
+        <div class="card-body">
+            <form asp-action="ProcesarPago">
+                <div class="form-group">
+                    <label for="tipoDePago">Tipo de Pago</label>
+                    <select id="tipoDePago" class="form-control" name="tipoDePago" required>
+                        <option value="">---Seleccione un tipo de pago---</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="TarjetaCreditoDebito">Tarjeta de Crédito o Débito</option>
+                        <option value="ChequeElectronico">Cheque Electrónico</option>
+                    </select>
+                    <span asp-validation-for="tipoDePago" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Subtotal:</label>
+                    <p class="form-control-static">@Model.Subtotal</p>
+                </div>
+                <div class="form-group">
+                    <label>Descuento:</label>
+                    <p class="form-control-static">@Model.Descuento</p>
+                </div>
+                <div class="form-group">
+                    <label>Total:</label>
+                    <p class="form-control-static">@Model.Total</p>
+                </div>
+                <button type="submit" class="btn btn-success">Confirmar Pago</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        
+    </script>
+}

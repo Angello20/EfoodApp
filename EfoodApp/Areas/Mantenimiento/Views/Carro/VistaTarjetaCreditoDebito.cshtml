@@ -1,0 +1,60 @@
+﻿@model EfoodApp.Modelos.ViewModels.CarroCompraVM
+
+<div class="container mt-3">
+
+    <div class="card">
+        <div class="card-header">
+            Información de Tarjeta de Crédito o Débito
+        </div>
+        <div class="card-body">
+            <form asp-controller="Carro" asp-action="ProcesarPagoTarjeta" method="post">
+                <div class="form-group mb-3">
+                    <label for="TipoTarjeta">Tipo Tarjeta:</label>
+                    <select id="TipoTarjeta" class="form-control" name="TipoTarjeta" required>
+                        <option value="Visa">Visa</option>
+                        <option value="MasterCard">MasterCard</option>
+                        <option value="Amex">American Express</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="NumeroTarjeta">Número:</label>
+                    <input type="text" class="form-control" id="NumeroTarjeta" name="NumeroTarjeta" placeholder="Número de la tarjeta" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="FechaExpiracionMes">Fecha Expiración Mes:</label>
+                        <select id="FechaExpiracionMes" class="form-control" name="FechaExpiracionMes" required>
+                            @for (int mes = 1; mes <= 12; mes++)
+                            {
+                                <option value="@mes.ToString("00")">@mes.ToString("00")</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="FechaExpiracionAnio">Año:</label>
+                        <select id="FechaExpiracionAnio" class="form-control" name="FechaExpiracionAnio" required>
+                            @for (int anio = DateTime.Now.Year; anio <= DateTime.Now.Year + 10; anio++)
+                            {
+                                <option value="@anio">@anio</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="CVV">CVV:</label>
+                    <input type="text" class="form-control" id="CVV" name="CVV" placeholder="Código de seguridad" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Siguiente</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back();">Anterior</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Aquí puedes agregar cualquier script específico que sea necesario para la página
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<select id="lineaFiltro" class="form-select" onchange="cargarProductosConPrecios()">
+    <option value="">Todas las líneas</option>
+    @foreach (var linea in ViewBag.LineaLista as IEnumerable<EfoodApp.Modelos.Linea>)
+    {
+        <option value="@linea.Id">@linea.Descripcion</option>
+    }
+</select>
+
+
+<br />
+
+<div class="p-4 border rounded bg-light">
+    <table id="tblDatos" class="table table-responsive table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Precios</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargarán aquí mediante JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        // Esta función se encarga de cargar y recargar los productos
+        // con precios dependiendo del filtro de línea seleccionado
+        function cargarProductosConPrecios() {
+            var lineaId = $('#lineaFiltro').val() || ''; // Obtiene el ID de la línea o una cadena vacía si no se ha seleccionado ninguna
+            $.ajax({
+                url: '@Url.Action("ObtenerProductosConPrecios", "Producto", new { Area = "Consulta" })',
+                type: 'GET',
+                data: { lineaId: lineaId }, // Agrega el parámetro de la línea al pedido
+                success: function (data) {
+                    var tabla = $('#tblDatos').DataTable();
+                    tabla.clear();
+                    $.each(data, function (index, producto) {
+                        var precios = producto.preciosProducto.map(p => p.precio.descripcion + ': ' + p.monto).join(', ');
+                        tabla.row.add([
+                            producto.producto.codigo,
+                            producto.producto.descripcion,
+                            precios,
+                        ]);
+                    });
+                    tabla.draw();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Enlaza el evento change del dropdown con la nueva función
+        $('#lineaFiltro').change(cargarProductosConPrecios);
+
+        // Carga inicial de datos cuando la página está lista
+        $(document).ready(function () {
+            cargarProductosConPrecios();
+        });
+    </script>
+}
+

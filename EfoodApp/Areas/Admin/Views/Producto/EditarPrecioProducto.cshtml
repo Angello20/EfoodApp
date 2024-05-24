@@ -1,0 +1,18 @@
+﻿@model EfoodApp.Modelos.ViewModels.PrecioProductoVM
+
+<h2>Editar Precio del Producto</h2>
+
+<form asp-action="ActualizarPrecioProducto" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label>Tipo de Precio</label>
+        <input type="text" class="form-control" value="@Model.PrecioProducto.Precio.Descripcion" readonly />
+    </div>
+    <div class="form-group">
+        <label>Precio</label>
+        <input asp-for="PrecioProducto.Monto" class="form-control" />
+        <input type="hidden" asp-for="PrecioProducto.Id" />
+        <input type="hidden" asp-for="PrecioProducto.ProductoId" />
+    </div>
+    <button type="submit" class="btn btn-success">Actualizar</button>
+</form>

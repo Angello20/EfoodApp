@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2 class="text-primary">Lista de Pedidos</h2>
+    </div>
+    <div class="col-lg-6">
+        <select id="estadoPedido" class="form-select">
+            <option value="Todos">Todos</option>
+            <option value="Procesada">Procesada</option>
+            <option value="Cancelada">Cancelada</option>
+            <option value="En curso">En curso</option>
+        </select>
+    </div>
+</div>
+
+<br />
+
+<div class="p-4 border rounded bg-light">
+    <table id="tblDatos" class="table table-responsive table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Número Pedido</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/pedido.js"></script>
+}

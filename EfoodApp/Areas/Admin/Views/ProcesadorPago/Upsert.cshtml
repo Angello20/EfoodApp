@@ -1,0 +1,207 @@
+﻿@model EfoodApp.Modelos.ViewModels.ProcesadorPagoVM
+@using EfoodApp.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var título = "Crear Nuevo Procesador de Pago";
+}
+
+<form method="post" enctype="multipart/form-data">
+    @if (Model.ProcesadorPago.Id != 0)
+    {
+        título = "Editar Procesador de Pago";
+        <input asp-for="ProcesadorPago.Id" hidden />
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@título</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Código: </label>
+                            <input asp-for="ProcesadorPago.Codigo" class="form-control" />
+                            <span asp-validation-for="ProcesadorPago.Codigo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Procesador: </label>
+                            <input asp-for="ProcesadorPago.Procesador" class="form-control" />
+                            <span asp-validation-for="ProcesadorPago.Procesador" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nombre en opción de Pago: </label>
+                            <input asp-for="ProcesadorPago.Nombre" class="form-control" />
+                            <span asp-validation-for="ProcesadorPago.Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Tipo:</label>
+                            <select asp-for="ProcesadorPago.Tipo" class="form-control" id="tipoProcesadorPago">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta de Crédito o Débito">Tarjeta de Crédito o Débito</option>
+                                <option value="Cheque Electrónico">Cheque Electrónico</option>
+                            </select>
+                            <span asp-validation-for="ProcesadorPago.Tipo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="ProcesadorPago.Estado" class="control-label">Estado:</label>
+                            <input asp-for="ProcesadorPago.Estado" class="form-check-input" /> Activo
+                            <span asp-validation-for="ProcesadorPago.Estado" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="ProcesadorPago.Verificacion" class="control-label">Requiere Verificación:</label>
+                            <input asp-for="ProcesadorPago.Verificacion" class="form-check-input" />
+                            <span asp-validation-for="ProcesadorPago.Verificacion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Método: </label>
+                            <input asp-for="ProcesadorPago.Metodo" class="form-control" />
+                            <span asp-validation-for="ProcesadorPago.Metodo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    @if (Model.ProcesadorPago.Tipo == "Tarjeta de Crédito o Débito" || Model.ProcesadorPago.Id == 0)
+                    {
+                        <h4>Tarjetas</h4> <!-- Título general para la sección -->
+                        <div id="tarjetas-section" class="row">
+                            <div class="col-md-5">
+                                <h5>Disponibles</h5> <!-- Título para las tarjetas disponibles -->
+                                <select id="tarjetasDisponibles" asp-items="@Model.TarjetasDisponibles" class="form-control" multiple size="10"></select>
+                            </div>
+                            <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+                                <button type="button" id="btnAsignarTarjeta" class="btn btn-primary mb-2">Asignar &gt;&gt;</button>
+                                <button type="button" id="btnQuitarTarjeta" class="btn btn-secondary">&lt;&lt; Quitar</button>
+                            </div>
+                            <div class="col-md-5">
+                                <h5>Asignadas</h5> <!-- Título para las tarjetas asignadas -->
+                                <select asp-for="TarjetasAsignadasIds" id="tarjetasAsignadas" class="form-control" multiple size="5">
+                                    @foreach (var tarjeta in Model.TarjetasAsignadas)
+                                    {
+                                        <option value="@tarjeta.Value">@tarjeta.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    }
+
+
+
+                    @* <button type="button" id="btnAsignarTarjeta">Asignar</button> *@
+                    @* <button type="button" id="btnQuitarTarjeta">Quitar</button> *@
+
+                    
+
+
+
+                    <div class="form-group">
+                        <!-- Conditionally render buttons based on the action (Create or Edit) -->
+                        @if (Model.ProcesadorPago.Id == 0)
+                        {
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        }
+                        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    <script>
+        // Función para actualizar los IDs de las tarjetas asignadas y asegurarse de que están seleccionadas
+        function actualizarTarjetasAsignadas() {
+            // Seleccionar todas las opciones en el select de tarjetas asignadas
+            $('#tarjetasAsignadas option').prop('selected', true);
+
+            // Recopilar todos los valores seleccionados en un array
+            var asignadasIds = $('#tarjetasAsignadas').val();
+            console.log('Tarjetas asignadas:', asignadasIds);
+        }
+
+        // Evento click para el botón de asignar tarjeta
+        $('#btnAsignarTarjeta').click(function () {
+            var selectedOptions = $('#tarjetasDisponibles option:selected');
+            $('#tarjetasAsignadas').append(selectedOptions);
+        });
+
+        // Evento click para el botón de quitar tarjeta
+        $('#btnQuitarTarjeta').click(function () {
+            var selectedOptions = $('#tarjetasAsignadas option:selected');
+            $('#tarjetasDisponibles').append(selectedOptions);
+        });
+
+        // Evento submit para el formulario
+        $('form').submit(function (event) {
+            // Actualizar los IDs de tarjetas asignadas antes de enviar el formulario
+            actualizarTarjetasAsignadas();
+        });
+
+
+
+        function habilitarOpcionesAsignarTarjetas() {
+            var tipoSeleccionado = $("#tipoProcesadorPago").val();
+            var tarjetasSection = $("#tarjetas-section");
+
+            if (tipoSeleccionado === "Tarjeta de Crédito o Débito") {
+                // Mostrar la sección de tarjetas
+                tarjetasSection.show();
+            } else {
+                // Ocultar la sección de tarjetas
+                tarjetasSection.hide();
+            }
+        }
+
+
+        $(document).ready(function () {
+            // Agregar el evento change al dropdownlist
+            $('#tipoProcesadorPago').change(function () {
+                habilitarOpcionesAsignarTarjetas();
+            });
+
+            // Llamar a la función al cargar la página para establecer el estado inicial
+            habilitarOpcionesAsignarTarjetas();
+        });
+
+
+    </script>
+}
+
+

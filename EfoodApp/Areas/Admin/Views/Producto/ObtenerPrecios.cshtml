@@ -1,0 +1,89 @@
+﻿@model EfoodApp.Modelos.ViewModels.PrecioProductoVM
+
+<h2>Lista de Precios del Producto: @Model.Producto.Descripcion</h2>
+
+<form asp-action="AgregarPrecioProducto" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="PrecioProducto.PrecioId">Tipo de Precio</label>
+        <select asp-for="PrecioProducto.PrecioId" asp-items="@Model.TiposPrecio" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrecioProducto.Monto">Precio</label>
+        <input asp-for="PrecioProducto.Monto" class="form-control" />
+        <input type="hidden" asp-for="PrecioProducto.ProductoId" value="@Model.Producto.Id" />
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">
+    <i class="bi bi-arrow-return-left"></i> Regresar a Productos
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tipo Precio</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var precio in Model.PreciosProducto)
+        {
+            <tr>
+                <td>@precio.Precio.Descripcion</td>
+                <td>@precio.Monto</td>
+                <td>
+                    <a asp-action="EditarPrecioProducto" asp-route-id="@precio.Id" class="btn btn-info text-white">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a onclick="DeletePrecio(@precio.Id)" class="btn btn-danger text-white" style="cursor:pointer">
+                        <i class="bi bi-trash-fill"></i> Eliminar
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        // Esta función se llama cuando haces clic en el botón de eliminar precio
+        function DeletePrecio(id) {
+            swal({
+                title: "Está seguro de que quiere eliminar el precio?",
+                text: "Este registro no se podrá recuperar",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Admin/Producto/DeletePrecio',
+                        data: { id: id },
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                setTimeout(function () { // Agrega un retraso antes de recargar
+                                    location.reload(); // Recargar la página para reflejar el cambio
+                                }, 500); // 2000 milisegundos = 2 segundos
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
+    </script>
+}
+
+

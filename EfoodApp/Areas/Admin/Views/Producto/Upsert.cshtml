@@ -1,0 +1,145 @@
+﻿@model EfoodApp.Modelos.ViewModels.ProductoVM
+@using EfoodApp.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var título = "Crear Nuevo Producto";
+}
+
+<form method="post" enctype="multipart/form-data">
+    @if (Model.Producto.Id != 0)
+    {
+        título = "Editar Producto";
+        <input asp-for="Producto.Id" hidden />
+        <input asp-for="Producto.ImagenUrl" hidden />
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@título</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Código</label>
+                            <input asp-for="Producto.Codigo" class="form-control" />
+                            <span asp-validation-for="Producto.Codigo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripcion</label>
+                            <input asp-for="Producto.Descripcion" class="form-control" />
+                            <span asp-validation-for="Producto.Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Linea</label>
+                            <select asp-for="Producto.LineaId" asp-items="@Model.LineaLista" class="form-select">
+                                <option disabled selected>-- Seleccione una Linea de Comida --</option>
+                            </select>
+                            <span asp-validation-for="Producto.LineaId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Contenido</label>
+                            <input asp-for="Producto.Contenido" class="form-control" />
+                            <span asp-validation-for="Producto.Contenido" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Imagen</label>
+                            <input type="file" accept="image/png, image/gif, image/jpeg" name="files" id="imagenId" class="form-control" />
+                            <span asp-validation-for="Producto.Contenido" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Producto.Id != 0)
+                        {
+                            <partial name="_BotonesActualizarYRegresar" model="@Model.Producto.Id" />
+                        }
+                        else
+                        {
+                            <button type="submit" onclick="return validarImagen()" class="btn btn-primary">
+                                <i class="bi bi-plus-square-fill"></i>Crear
+                            </button>
+                            <a asp-action="Index" class="btn btn-success">
+                                <i class="bi bi-arrow-return-left"></i>Regresar
+                            </a>
+                        }
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-4">
+                @if (Model.Producto.Id != 0)
+                {
+                    <img src="@DS.ImagenRuta@Model.Producto.ImagenUrl" width="100%" style="border-radius:5px; border:1px solid #bbb" />
+                }
+            </div>
+
+
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById("Codigo").addEventListener('change', function () {
+            validarCodigo();
+        });
+
+        function validarCodigo() {
+            var url = '@Url.Action("ValidarCodigo", "Producto", new { area = "Admin" })';
+            var codigo = document.getElementById("Codigo").value;
+            var id = '@Model.Producto.Id';
+
+            $.getJSON(url, { codigo: codigo, id: id }, function (data) {
+                console.log(data);
+                if (data.data) {
+                    swal("Error", "Código ya existe", "error");
+                    document.getElementById("Codigo").value = "";
+                }
+            });
+        }
+
+
+        function validarImagen() {
+            if (document.getElementById("imagenId").value === "") {
+                swal("Error", "Seleccione una Imagen!", "error");
+                return false;
+            }
+            return true;
+        }
+
+
+        
+
+        
+
+    </script>
+}
+
