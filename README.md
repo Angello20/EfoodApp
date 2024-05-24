@@ -60,4 +60,3 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 
 ![Main View](path/to/your/image.png)
 
-
