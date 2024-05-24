@@ -27,5 +27,11 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
    ```bash
    dotnet ef database update
 
-
+4. **Run the Application**
    
+   ```bash
+   dotnet run
+
+5. **Access the Application**
+
+   * Open your web browser and go to https://localhost:5001.
