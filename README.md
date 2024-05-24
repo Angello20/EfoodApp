@@ -36,7 +36,7 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 
 5. **Access the Application**
 
-   - Open your web browser and go to `https://localhost:5001`.
+   - Open your web browser and go to `http://localhost:5078/`.
 
 ## Features
 
