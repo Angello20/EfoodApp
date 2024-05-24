@@ -61,25 +61,4 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 
 ![Main View](path/to/your/image.png)
 
-## Contributions
 
-Contributions are welcome! If you want to contribute to this project, please follow these steps:
-
-1. Fork the project.
-2. Create a new branch (`git checkout -b feature/new-feature`).
-3. Make your changes and commit them (`git commit -am 'Add new feature'`).
-4. Push your changes (`git push origin feature/new-feature`).
-5. Open a Pull Request.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-## Contact
-
-For more information, you can contact me at: [youremail@domain.com](mailto:youremail@domain.com).
-
-Happy coding! 🚀
-```
-
-Este es el README completo con todas las secciones necesarias para describir tu proyecto de eFood Commerce. Puedes personalizarlo más según sea necesario, agregando más detalles específicos de tu proyecto o cambiando el contenido según tus necesidades.
