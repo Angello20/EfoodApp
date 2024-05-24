@@ -13,8 +13,8 @@ This project is an e-commerce platform developed in ASP.NET Core and C#. The goa
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/efood-commerce.git
-   cd efood-commerce
+   git clone https://github.com/Angello20/EfoodApp.git
+   cd EfoodApp
    ```
 
 2. **Configure the Database**
